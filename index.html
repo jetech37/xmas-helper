@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Santa's Little Helper</title>
+<meta name="description" content="Your all-in-one Christmas helper: wish lists, gift ideas, Secret Santa, Santa tracker, letters to Santa and Elf Scout.">
+<meta name="theme-color" content="#0f3d2e">
+<link rel="canonical" href="https://xmashelper.com/">
+<meta property="og:title" content="Santa's Little Helper">
+<meta property="og:description" content="Wish lists, gift ideas, Secret Santa, a Santa tracker, letters to Santa and Elf Scout. Free, no sign-up.">
+<meta property="og:url" content="https://xmashelper.com/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://xmashelper.com/icons/icon-512.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Santa's Helper">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pine:#0f3d2e; --pine-2:#16533f; --pine-3:#1f6b52; --berry:#c8102e; --berry-2:#a00d25;
+  --cream:#fff8ec; --paper:#fffdf8; --gold:#e8b04a; --gold-2:#f6d58b; --ink:#23201c; --muted:#6c655c;
+  --line:#eadfcb; --snow:#ffffff; --sky:#0b1d3a; --ok:#2f8f5b;
+  --radius:18px; --shadow:0 6px 20px rgba(15,61,46,.12);
+  --safe-top:env(safe-area-inset-top,0px); --safe-bot:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--cream);color:var(--ink);font-family:Nunito,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:16px;line-height:1.45}
+body{min-height:100vh;padding-bottom:calc(78px + var(--safe-bot))}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--berry)}
+h1,h2,h3{margin:0 0 .4em;line-height:1.15}
+h2{font-size:1.35rem} h3{font-size:1.08rem}
+.festive{font-family:'Mountains of Christmas',Georgia,serif;letter-spacing:.5px}
+
+/* Header */
+.top{position:sticky;top:0;z-index:20;background:linear-gradient(180deg,var(--pine),var(--pine-2));color:var(--cream);padding:calc(10px + var(--safe-top)) 16px 12px;box-shadow:0 2px 10px rgba(0,0,0,.2)}
+.top-in{max-width:880px;margin:0 auto;display:flex;align-items:center;gap:10px}
+.logo{font-size:1.75rem;line-height:1;margin:0;flex:1;display:flex;align-items:center;gap:8px;color:var(--cream)}
+.logo span.hat{font-size:1.5rem}
+.top .pill{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:var(--cream);border-radius:99px;padding:6px 12px;font-weight:700;font-size:.85rem;cursor:pointer}
+.lights{height:10px;max-width:880px;margin:8px auto 0;display:flex;justify-content:space-between}
+.lights i{width:8px;height:10px;border-radius:50% 50% 45% 45%;display:block;animation:twinkle 2.4s infinite}
+.lights i:nth-child(4n+1){background:#ff5a5f}.lights i:nth-child(4n+2){background:#ffd166;animation-delay:.6s}
+.lights i:nth-child(4n+3){background:#6fd3a7;animation-delay:1.2s}.lights i:nth-child(4n){background:#7cc6ff;animation-delay:1.8s}
+@keyframes twinkle{0%,100%{opacity:1;filter:drop-shadow(0 0 4px currentColor)}50%{opacity:.45}}
+
+main{max-width:880px;margin:0 auto;padding:16px}
+.view{animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* Cards & layout */
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);margin-bottom:14px}
+.card.pine{background:linear-gradient(160deg,var(--pine),var(--pine-3));color:var(--cream);border:none}
+.card.berry{background:linear-gradient(160deg,var(--berry),#e0453d);color:#fff;border:none}
+.card.sky{background:linear-gradient(170deg,#0b1d3a,#1b3a6b);color:#fff;border:none}
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+.g3{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.row.between{justify-content:space-between}
+.grow{flex:1;min-width:0}
+.muted{color:var(--muted)} .small{font-size:.86rem} .center{text-align:center}
+.card.pine .muted,.card.sky .muted,.card.berry .muted{color:rgba(255,255,255,.78)}
+.sep{height:1px;background:var(--line);margin:12px 0}
+.badge{display:inline-block;padding:2px 9px;border-radius:99px;font-size:.75rem;font-weight:800;background:var(--gold-2);color:#5a3d00}
+.badge.red{background:#ffd9de;color:var(--berry-2)} .badge.green{background:#d6f2e2;color:#1d5c3b}
+
+/* Forms */
+label.f{display:block;font-weight:700;font-size:.9rem;margin:10px 0 4px}
+input[type=text],input[type=number],input[type=date],input[type=url],select,textarea{width:100%;padding:11px 12px;border:1.5px solid var(--line);border-radius:12px;background:#fff;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--pine-3);box-shadow:0 0 0 3px rgba(31,107,82,.15)}
+textarea{min-height:90px;resize:vertical}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:none;border-radius:12px;padding:10px 16px;font-weight:800;cursor:pointer;background:var(--berry);color:#fff;box-shadow:0 3px 0 var(--berry-2);transition:transform .08s}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--berry-2)}
+.btn.green{background:var(--pine-3);box-shadow:0 3px 0 var(--pine)}
+.btn.gold{background:var(--gold);color:#3b2a00;box-shadow:0 3px 0 #b8862c}
+.btn.ghost{background:transparent;color:var(--pine);box-shadow:none;border:1.5px solid var(--line)}
+.card.pine .btn.ghost,.card.sky .btn.ghost{color:#fff;border-color:rgba(255,255,255,.4)}
+.btn.sm{padding:6px 11px;font-size:.85rem;border-radius:10px}
+.btn.block{width:100%}
+.icon-btn{background:none;border:none;cursor:pointer;font-size:1.1rem;padding:4px 6px;border-radius:8px}
+.icon-btn:hover{background:rgba(0,0,0,.05)}
+
+/* Segmented tabs */
+.seg{display:flex;background:#efe5d2;border-radius:14px;padding:4px;margin-bottom:14px;gap:4px}
+.seg button{flex:1;border:none;background:none;padding:9px 6px;border-radius:10px;font-weight:800;cursor:pointer;color:var(--muted)}
+.seg button.on{background:#fff;color:var(--pine);box-shadow:0 2px 6px rgba(0,0,0,.08)}
+
+/* Bottom nav */
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;background:#fff;border-top:1px solid var(--line);padding:6px 4px calc(6px + var(--safe-bot));box-shadow:0 -4px 14px rgba(0,0,0,.06)}
+nav.tabs .in{max-width:880px;margin:0 auto;display:flex}
+nav.tabs a{flex:1;white-space:nowrap;min-width:0;text-decoration:none;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:1px;font-size:.7rem;font-weight:800;padding:4px 2px;border-radius:12px}
+nav.tabs a .e{font-size:1.35rem;line-height:1.2;filter:grayscale(.5);transition:transform .15s}
+nav.tabs a.on{color:var(--berry)} nav.tabs a.on .e{filter:none;transform:scale(1.15)}
+
+/* Countdown */
+.count{display:flex;gap:8px;justify-content:center;margin:10px 0 4px}
+.count div{background:rgba(255,255,255,.12);border-radius:14px;padding:10px 6px;min-width:66px;text-align:center}
+.count b{display:block;font-size:1.9rem;line-height:1}
+.count span{font-size:.7rem;text-transform:uppercase;letter-spacing:1px;opacity:.85}
+
+/* Advent */
+.advent{display:grid;grid-template-columns:repeat(6,1fr);gap:7px}
+@media (max-width:520px){.advent{grid-template-columns:repeat(4,1fr)}}
+.door{aspect-ratio:1;border:none;border-radius:12px;cursor:pointer;font-weight:800;font-size:1.2rem;color:#fff;position:relative;background:var(--pine-3);box-shadow:inset 0 0 0 2px rgba(255,255,255,.18)}
+.door:nth-child(3n+1){background:var(--berry)} .door:nth-child(3n+2){background:var(--pine-3)} .door:nth-child(3n){background:#b8862c}
+.door.locked{opacity:.55} .door.open{background:#fff !important;color:var(--ink);box-shadow:inset 0 0 0 2px var(--line)}
+.door.today{outline:3px solid var(--gold);outline-offset:2px;animation:pulse 1.6s infinite}
+@keyframes pulse{50%{outline-color:transparent}}
+
+/* Meter */
+.meter{height:14px;border-radius:99px;background:#efe5d2;overflow:hidden}
+.meter i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--berry));border-radius:99px;transition:width .4s}
+.card.pine .meter,.card.sky .meter{background:rgba(255,255,255,.18)}
+
+/* List items */
+.item{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px dashed var(--line)}
+.item:last-child{border-bottom:none}
+.item .t{font-weight:700} .item .e{font-size:1.5rem;line-height:1}
+.avatar{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-size:1.5rem;background:var(--cream);border:2px solid var(--line);flex:none}
+.chip{display:inline-flex;align-items:center;gap:4px;background:var(--cream);border:1px solid var(--line);border-radius:99px;padding:4px 10px;font-size:.85rem;font-weight:700;margin:3px}
+.chip button{border:none;background:none;cursor:pointer;color:var(--muted);padding:0 0 0 2px}
+
+/* Gift idea tile */
+.tile{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:6px}
+.tile .e{font-size:2rem}
+
+/* Letters */
+.parchment{background:#fff9ea url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M0 39.5h40' stroke='%23efe1c3' stroke-width='1'/%3E%3C/svg%3E");border:1px solid #ecdcb8;border-radius:6px 6px 16px 16px;padding:22px 20px;font-family:Georgia,'Times New Roman',serif;font-size:1.02rem;line-height:1.6;white-space:pre-wrap;box-shadow:0 8px 24px rgba(120,80,20,.15);position:relative}
+.parchment:before{content:"🎅";position:absolute;right:14px;top:-18px;font-size:2rem}
+.parchment.kid{font-family:'Comic Sans MS','Chalkboard SE',Nunito,sans-serif}
+.parchment.kid:before{content:"✉️"}
+.envelope{font-size:4rem;text-align:center;animation:fly 2.2s ease-in forwards}
+@keyframes fly{0%{transform:translate(0,0) rotate(0)}40%{transform:translate(0,-10px) rotate(-8deg)}100%{transform:translate(160px,-260px) rotate(20deg) scale(.3);opacity:0}}
+
+/* Tracker map */
+.map{width:100%;height:auto;border-radius:14px;background:radial-gradient(ellipse at 50% 0%,#1f3f75,#0b1d3a 70%);display:block}
+#trk .grid{grid-template-columns:repeat(auto-fit,minmax(100px,1fr))}
+.stat{background:rgba(255,255,255,.1);border-radius:14px;padding:10px 12px}
+.stat b{display:block;font-size:1.3rem}
+.stat span{font-size:.75rem;text-transform:uppercase;letter-spacing:1px;opacity:.8}
+
+/* Elf */
+.scout{background:linear-gradient(160deg,#fff,#fff3dc);border:2px dashed var(--gold);border-radius:22px;padding:20px;text-align:center}
+.scout .q{font-size:1.35rem;font-weight:800;color:var(--pine);margin:8px 0 14px}
+.peek{font-size:3rem;display:inline-block;animation:peek 3s infinite}
+@keyframes peek{0%,100%{transform:translateY(6px) rotate(-6deg)}50%{transform:translateY(-4px) rotate(6deg)}}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.cal .d{background:#fff;border:1px solid var(--line);border-radius:10px;padding:6px 4px;min-height:58px;font-size:.72rem;cursor:pointer;text-align:left}
+.cal .d b{display:block;font-size:.85rem}
+.cal .d.has{background:#eaf6ef;border-color:#b7e0c8}
+.cal .d.done{opacity:.55;text-decoration:line-through}
+.cal .d.tonight{outline:3px solid var(--gold)}
+@media (max-width:520px){.cal{grid-template-columns:repeat(4,1fr)}}
+
+/* Modal & toast */
+.modal-bg{position:fixed;inset:0;background:rgba(10,20,15,.55);z-index:50;display:flex;align-items:flex-end;justify-content:center;padding:16px;animation:fade .15s}
+@media (min-width:600px){.modal-bg{align-items:center}}
+.modal{background:var(--paper);border-radius:22px;max-width:520px;width:100%;max-height:88vh;overflow:auto;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.35);padding-bottom:calc(20px + var(--safe-bot))}
+.toast{position:fixed;left:50%;bottom:calc(92px + var(--safe-bot));transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:99px;font-weight:700;z-index:60;box-shadow:0 6px 20px rgba(0,0,0,.25);animation:fade .2s;max-width:90vw;text-align:center}
+.reveal-name{font-size:2.6rem;font-weight:800;color:var(--berry);margin:8px 0}
+
+/* Snow */
+.snow{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.snow i{position:absolute;top:-10px;color:#fff;text-shadow:0 0 3px rgba(0,0,0,.15);animation:fall linear infinite;opacity:.8}
+@keyframes fall{to{transform:translateY(110vh) translateX(30px)}}
+.burst{position:fixed;pointer-events:none;z-index:70;font-size:1.6rem;animation:burst 1.2s ease-out forwards}
+@keyframes burst{to{transform:translate(var(--x),var(--y)) rotate(360deg);opacity:0}}
+@media (prefers-reduced-motion:reduce){.snow,.lights i,.peek,.door.today{animation:none !important}.snow{display:none}}
+main,.top{position:relative;z-index:2}
+.lock{font-size:3rem}
+.empty{text-align:center;padding:24px 10px;color:var(--muted)}
+.empty .e{font-size:2.6rem;display:block;margin-bottom:6px}
+details summary{cursor:pointer;font-weight:800}
+.hide{display:none !important}
+</style>
+</head>
+<body>
+<div class="snow" id="snow" aria-hidden="true"></div>
+<header class="top">
+  <div class="top-in">
+    <h1 class="logo festive"><span class="hat">🎅</span> Santa's Little Helper</h1>
+    <button class="pill hide" id="installBtn">📲 Install</button>
+  </div>
+  <div class="lights" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+</header>
+<main id="app"></main>
+<nav class="tabs" aria-label="Sections"><div class="in" id="nav"></div></nav>
+<div id="layer"></div>
+<noscript><p style="padding:20px">Santa's Little Helper needs JavaScript turned on.</p></noscript>
+<script src="js/logic.js"></script>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

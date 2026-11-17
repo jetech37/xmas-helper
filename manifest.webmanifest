@@ -1,0 +1,15 @@
+{
+  "name": "Santa's Little Helper",
+  "short_name": "Santa's Helper",
+  "description": "Wish lists, gift ideas, Secret Santa, Santa tracker, letters to Santa and Elf Scout.",
+  "start_url": "./index.html#home",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fff8ec",
+  "theme_color": "#0f3d2e",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
